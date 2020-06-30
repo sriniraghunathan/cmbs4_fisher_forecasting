@@ -12,7 +12,7 @@ import tools
 #get the necessary arguments
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('-paramfile', dest='paramfile', action='store', help='paramfile', type=str, default='params/params_planck_r_0.0_2015_cosmo_lensed_LSS_JM.txt')
-parser.add_argument('-which_spectra', dest='which_spectra', action='store', help='which_spectra', type=str, default='lensed_scalar')
+parser.add_argument('-which_spectra', dest='which_spectra', action='store', help='which_spectra', type=str, default='lensed_scalar', choices=['lensed_scalar', 'unlensed_scalar'])
 ##parser.add_argument('-use_thetastar', dest='use_thetastar', action='store', type=int, help='use_thetastar', default= 1)
 ##parser.add_argument('-use_cosmomc_theta', dest='use_cosmomc_theta', action='store', type=int, help='use_cosmomc_theta', default= 0)
 
