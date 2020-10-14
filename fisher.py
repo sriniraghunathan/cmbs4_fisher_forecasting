@@ -65,7 +65,8 @@ min_l_temp, max_l_temp = 30, 5000
 min_l_pol, max_l_pol = 30, 5000
 fix_params = [] #['mnu', 'ws'] but curretnly nothing to fix as we only have a 6+1(neff) LCDM model
 prior_dic = {'tau':0.007}#02}#02} #Planck tau prior
-desired_param = 'neff' #desired parameter for which we are computing the constraints. set to None if you want to analyse the full fisher matrix
+#desired_param = 'neff' #desired parameter for which we are computing the constraints. set to None if you want to analyse the full fisher matrix
+desired_param_arr = 'neff' #desired parameter for which we are computing the constraints. set to None if you want to analyse the full fisher matrix
 include_gal = 0
 gal_mask = 3 #only valid if galaxy is included
 fsky = 0.77
@@ -103,16 +104,17 @@ print('\n\tget covariance matrix')
 Cov_mat = sc.linalg.pinv2(F_mat) #made sure that COV_mat_l * Cinv_l ~= I
 ############################################################################################################
 #extract sigma(neff)
-if desired_param is not None:
-    print('\n\textract sigma(neff)')
-    pind = np.where(param_names == desired_param)[0][0]
-    pcntr1, pcntr2 = pind, pind
-    cov_inds_to_extract = [(pcntr1, pcntr1), (pcntr1, pcntr2), (pcntr2, pcntr1), (pcntr2, pcntr2)]
-    cov_extract = np.asarray( [Cov_mat[ii] for ii in cov_inds_to_extract] ).reshape((2,2))
-    sigma = cov_extract[0,0]**0.5
-    sigma = round(sigma, 4)
-    opline = '\n\t\t\simga(neff) = %.4f using observables = %s; fsky = %s; power spectra = %s\n' %(sigma, str(pspectra_to_use), fsky, which_spectra)
-    print(opline)
+if desired_param_arr is not None:
+    for desired_param in desired_param_arr:
+        print('\n\textract sigma(%s)' %(desired_param))
+        pind = np.where(param_names == desired_param)[0][0]
+        pcntr1, pcntr2 = pind, pind
+        cov_inds_to_extract = [(pcntr1, pcntr1), (pcntr1, pcntr2), (pcntr2, pcntr1), (pcntr2, pcntr2)]
+        cov_extract = np.asarray( [Cov_mat[ii] for ii in cov_inds_to_extract] ).reshape((2,2))
+        sigma = cov_extract[0,0]**0.5
+        sigma = round(sigma, 4)
+        opline = '\n\t\t\simga(%s) = %.4f using observables = %s; fsky = %s; power spectra = %s\n' %(desired_param, sigma, str(pspectra_to_use), fsky, which_spectra)
+        print(opline)
 sys.exit()
 ############################################################################################################
 
