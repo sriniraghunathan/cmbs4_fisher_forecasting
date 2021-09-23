@@ -1,6 +1,7 @@
-import numpy as np, camb, sys, scipy as sc, os
+import numpy as np, sys, scipy as sc, os
 #from camb import model, initialpower
 #from pylab import *
+from scipy import linalg
 from copy import deepcopy
 
 
@@ -151,8 +152,14 @@ def get_fisher_mat(els, cl_deriv_dic, delta_cl_dic, params, pspectra_to_use, min
         if 'EE' not in all_pspectra_to_use:
             null_EE = 1
         if 'TE' not in all_pspectra_to_use:
-            if 'TT' not in pspectra_to_use and 'EE' not in pspectra_to_use:
+            #if 'TT' not in pspectra_to_use and 'EE' not in pspectra_to_use:
+            #    null_TE = 1
+            if 'TT' in pspectra_to_use and 'EE' in pspectra_to_use:
+                null_TE = 0
+            else:
                 null_TE = 1
+        if ['PP'] not in pspectra_to_use:
+            null_PP = 1
         if ['TT', 'EE', 'TE'] in pspectra_to_use:
             null_TT = 0
             null_EE = 0
@@ -161,15 +168,21 @@ def get_fisher_mat(els, cl_deriv_dic, delta_cl_dic, params, pspectra_to_use, min
         #nulling unwanted fields
         if null_TT and null_TE: TT = 0
         if null_EE and null_TE: EE = 0
-        if null_TE and (null_TT and null_EE): TE = 0
+        #if null_TE and (null_TT and null_EE): TE = 0
+        if null_TE: 
+            if not null_TT and not null_EE:
+                pass
+            else:
+                TE = 0
         if null_PP: PP = Tphi = EPhi = 0
         if null_TT: Tphi = 0
         if null_EE: Ephi = 0
 
+        if (null_TT and null_EE and null_TE and null_PP): continue
         ##############################################################################
         #get covariance matrix and its inverse
         COV_mat_l = get_cov(TT, EE, TE, PP, Tphi, Ephi)
-        inv_COV_mat_l = sc.linalg.pinv2(COV_mat_l)
+        inv_COV_mat_l = linalg.pinv2(COV_mat_l)
 
         ##############################################################################
         #get the parameter combinations
