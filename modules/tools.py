@@ -307,7 +307,7 @@ def fn_get_Gaussian(mean, sigma, minx, maxx, delx):
 
 ########################################################################################################################
 
-def fn_get_nl(els, rms_map_T, rms_map_P = None, fwhm = None, Bl = None):
+def fn_get_nl(els, rms_map_T, rms_map_P = None, fwhm = None, Bl = None, elknee_t = -1, alphaknee_t = 0, elknee_p = -1, alphaknee_p = 0):
     """
     compute nl - white noise + beam
     """
@@ -330,6 +330,11 @@ def fn_get_nl(els, rms_map_T, rms_map_P = None, fwhm = None, Bl = None):
 
     nl_TT = (rms_map_T_radians)**2. * Bl
     nl_PP = (rms_map_P_radians)**2. * Bl
+
+    if elknee_t != -1.:
+        nl_TT = np.copy(nl_TT) * (1. + (elknee_t * 1./els)**alphaknee_t )
+    if elknee_p != -1.:
+        nl_PP = np.copy(nl_PP) * (1. + (elknee_p * 1./els)**alphaknee_p )
 
     return Bl, nl_TT, nl_PP
 
