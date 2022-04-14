@@ -115,9 +115,9 @@ def get_cov_for_fisher(TT, EE, TE, with_lensing = 0):
     C[1,2] = C[2,1] = EE*TE
 
     if with_lensing:
-        C[3,3] = np.copy(PP_ori)**2.
-        C[0,3] = C[3,0] = np.copy(Tphi_ori)**2.
-        C[1,3] = C[3,1] = np.copy(Ephi_ori)**2.
+        C[3,3] = np.copy(PP)**2.
+        C[0,3] = C[3,0] = np.copy(Tphi)**2.
+        C[1,3] = C[3,1] = np.copy(Ephi)**2.
 
     return np.mat( C )
 ########################################################################################################################
