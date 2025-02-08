@@ -68,6 +68,7 @@ prior_dic = {'tau':0.007}#02}#02} #Planck tau prior
 desired_param = 'neff' #desired parameter for which we are computing the constraints. set to None if you want to analyse the full fisher matrix
 include_gal = 0
 gal_mask = 3 #only valid if galaxy is included
+fsky = 0.77
 ############################################################################################################
 #get nl
 print('\n\tget nl')
