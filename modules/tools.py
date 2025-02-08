@@ -294,7 +294,7 @@ def fn_get_Gaussian(mean, sigma, minx, maxx, delx):
 
 ########################################################################################################################
 
-def fn_get_nl(els, fwhm, rms_map_T, rms_map_P = None, CMB = 1):
+def fn_get_nl(els, rms_map_T, rms_map_P = None, fwhm = None, Bl = None):
     """
     compute nl - white noise + beam
     """
@@ -302,11 +302,15 @@ def fn_get_nl(els, fwhm, rms_map_T, rms_map_P = None, CMB = 1):
     if rms_map_P == None:
         rms_map_P = rms_map_T * 1.414
 
-    fwhm_radians = np.radians(fwhm/60.)
-    #Bl = np.exp((-fwhm_radians**2.) * els * (els+1) /2.35)
-    sigma = fwhm_radians / np.sqrt(8. * np.log(2.))
-    sigma2 = sigma ** 2
-    Bl = np.exp(els * (els+1) * sigma2)
+    if fwhm is not None:
+        fwhm_radians = np.radians(fwhm/60.)
+        #Bl = np.exp((-fwhm_radians**2.) * els * (els+1) /2.35)
+        sigma = fwhm_radians / np.sqrt(8. * np.log(2.))
+        sigma2 = sigma ** 2
+        Bl_gau = np.exp(els * (els+1) * sigma2)            
+
+    if Bl is None:
+        Bl = Bl_gau
 
     rms_map_T_radians = rms_map_T * np.radians(1/60.)
     rms_map_P_radians = rms_map_P * np.radians(1/60.)
