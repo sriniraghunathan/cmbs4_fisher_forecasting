@@ -99,6 +99,27 @@ def get_cov(TT, EE, TE, PP, TP, EP):
 
     return np.mat( C )
 
+def get_cov_for_fisher(TT, EE, TE, with_lensing = 0):
+
+    if not with_lensing:
+        C = np.zeros( (3,3) ) #TT, EE, TE
+    else:
+        C = np.zeros( (4,4) ) #TT, EE, TE
+
+    C[0,0] = TT**2.
+    C[1,1] = EE**2.
+    C[2,2] = 0.5 * (TE**2. + TT * EE )
+
+    C[0,1] = C[1,0] = TE**2.
+    C[0,2] = C[2,0] = TT*TE
+    C[1,2] = C[2,1] = EE*TE
+
+    if with_lensing:
+        C[3,3] = np.copy(PP_ori)**2.
+        C[0,3] = C[3,0] = np.copy(Tphi_ori)**2.
+        C[1,3] = C[3,1] = np.copy(Ephi_ori)**2.
+
+    return np.mat( C )
 ########################################################################################################################
 
 def get_fisher_mat(els, cl_deriv_dic, delta_cl_dic, params, pspectra_to_use, min_l_temp = None, max_l_temp = None, min_l_pol = None, max_l_pol = None):
