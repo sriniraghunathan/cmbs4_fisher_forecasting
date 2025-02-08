@@ -1,0 +1,76 @@
+#cosmology
+#omega_m = 0.307320 #0.251510#0.24
+#omega_lambda = 0.692680 #0.748490#0.76
+#z_lss = 1089.
+T_cmb = 2.7255 #2.73
+As = 2.196e-9 ###2.100549e-9 ## 2.195e-9
+uK = 1
+
+#change the below params based on Planck Planck 2018 cosmology: currently the values come from http://camb.readthedocs.io/en/latest/CAMBdemo.html
+#the cosmological paramters that are being constrained come from Joel Meyers' numbers from https://cmb-s4.org/wiki/index.php/N_eff_Forecasting_Comparison_with_DRAFT_ILC
+h = 0.6732 ##0.7#0.6774 #0.73 #h parameter
+thetastar = 0.010409 ###1.0409 ###1.04109 
+ombh2 = 0.0222 ##0.0223828 ##0.022
+omch2= 0.1197 ##0.1201075 ##0.122
+neff=3.046 ##3.046
+omk=0
+tau=0.060 ##0.05430842 ##0.06
+ns=0.9655 ###0.9660499##0.965
+r=0.0
+ws = -1.
+YHe = None ##0.2454006##0.24
+Alens = 1.
+Aphiphi = 1.
+
+mnu= 0.06##0.06 ##0.06
+num_nu_massive = 1 ##1
+
+#pivots
+pivot_scalar = 0.05 ##0.002
+pivot_tensor = 0.05 ##0.002
+
+# CAMB files
+Dlfile_len = data/output_planck_r_0.0_2015_cosmo_lensedCls.dat
+lens_potential_accuracy=1 #1 - self.set_nonlinear_lensing(True)
+min_l_limit=2
+max_l_limit= 7000 ##3000 ##5000 ##2502
+max_l_tensor = 1500
+max_eta_k = 25000.0
+max_eta_k_tensor = 3000.0
+ 
+
+#experiment
+#fsky = 0.7
+#exp_beam = 7.
+#delta_T = 45.
+#delta_P = None
+
+#Increase accuracy_boost to decrease time steps, use more k values,  etc.
+#Decrease to speed up at cost of worse accuracy. Suggest 0.8 to 3.
+AccuracyBoost          = 2 ##3
+
+#Larger to keep more terms in the hierarchy evolution. 
+lAccuracyBoost        = 2 ##3
+
+#Increase to use more C_l values for interpolation.
+#Increasing a bit will improve the polarization accuracy at l up to 200 -
+#interpolation errors may be up to 3%
+#Decrease to speed up non-flat models a bit
+lSampleBoost          = 2
+
+#Whether you are bothered about polarization. 
+accurate_polarization   = 1
+
+#Whether you are bothered about percent accuracy on EE from reionization
+accurate_reionization   = 1
+
+#whether or not to include neutrinos in the tensor evolution equations
+do_tensor_neutrinos     = 0
+
+#Whether to turn off small-scale late time radiation hierarchies (save time,v. accurate)
+do_late_rad_truncation   = 0 ##1
+
+#Computation parameters
+#if number_of_threads=0 assigned automatically
+number_of_threads       = 0
+
