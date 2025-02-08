@@ -29,7 +29,7 @@ for kargs in args_keys:
 ############################################################################################################
 #folders containing inputs
 camb_folder = 'data/CMB_spectra_derivatives_for_code_comparison/'
-draft_results_folder = 'data/DRAFT/results/20200601/s4like_mask/TT-EE-TE/baseline/'
+draft_results_folder = 'data/DRAFT_results_20200601/'
 ############################################################################################################
 
 #get fiducual LCDM power spectra computed using CAMB
